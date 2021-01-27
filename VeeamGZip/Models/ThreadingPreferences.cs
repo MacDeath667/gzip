@@ -8,13 +8,13 @@ namespace VeeamGZip.Models
 
 		public static readonly int MaxWorkerThreadsNumber = Math.Min(Environment.ProcessorCount, 8);
 
-		public int? WorkerThreadsNumber { get; set; }
-		public int? BufferSizeBytes { get; set; }
+		public int? Threads { get; set; }
+		public int? BufferBytes { get; set; }
 
-		public static ThreadingPreferences Default => new ThreadingPreferences
+		public static ThreadingPreferences Auto => new ThreadingPreferences
 		{
-			BufferSizeBytes = DefaultBufferSizeBytes,
-			WorkerThreadsNumber = MaxWorkerThreadsNumber
+			BufferBytes = DefaultBufferSizeBytes,
+			Threads = MaxWorkerThreadsNumber
 		};
 	}
 }

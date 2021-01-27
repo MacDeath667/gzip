@@ -6,7 +6,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="CliArgumentHelper" />
       <Folder Include="Implementations" />
     </ItemGroup>
 

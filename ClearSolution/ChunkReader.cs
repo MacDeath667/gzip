@@ -8,9 +8,9 @@ namespace ClearSolution
 	{
 		public bool IsFileEnd { get; private set; }
 		private MultithreadingQueue<T> _queue;
-		private ManualResetEvent _manualResetEvent;
+		private ManualResetEventSlim _manualResetEvent;
 
-		public ChunkReader(MultithreadingQueue<T> queue, ManualResetEvent manualResetEvent)
+		public ChunkReader(MultithreadingQueue<T> queue, ManualResetEventSlim manualResetEvent)
 		{
 			_queue = queue;
 			_manualResetEvent = manualResetEvent;
@@ -18,6 +18,7 @@ namespace ClearSolution
 
 		public void Start(string filepath)
 		{
+			
 			new Thread(() => ReadChunks(filepath)).Start();
 		}
 
@@ -27,8 +28,7 @@ namespace ClearSolution
 			{
 				var buffer = new byte[2 * 1024 * 1024];
 				var readBytes = 0;
-
-
+				
 				while ((readBytes = filestream.Read(buffer)) > 0)
 				{
 					_queue.Enqueue(CreateChunk(buffer.Clone() as byte[], readBytes));

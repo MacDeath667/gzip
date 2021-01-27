@@ -12,6 +12,10 @@ namespace ClearSolution
 			_baseQueue = new Queue<T>();
 		}
 
+		public bool IsEmpty =>
+			 _baseQueue.Count == 0;
+		
+
 		public void Enqueue(T data)
 		{
 			lock (_baseQueue)
@@ -24,6 +28,7 @@ namespace ClearSolution
 						Monitor.PulseAll(_baseQueue);
 						return;
 					}
+
 					Monitor.Wait(_baseQueue);
 				}
 			}

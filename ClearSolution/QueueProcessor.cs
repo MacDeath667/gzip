@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading;
 
 namespace ClearSolution
@@ -7,24 +6,30 @@ namespace ClearSolution
 	public class QueueProcessor
 	{
 		private MultithreadingQueue<Chunk> _queue;
-		private ManualResetEvent _manualResetEvent;
+		private ManualResetEventSlim _inputFinished;
 		
-		public QueueProcessor( MultithreadingQueue<Chunk> queue, ManualResetEvent manualResetEvent)
+		public QueueProcessor( MultithreadingQueue<Chunk> queue, ManualResetEventSlim inputFinished)
 		{
 			_queue = queue;
-			_manualResetEvent = manualResetEvent;
+			_inputFinished = inputFinished;
 		}
 
 		private void Dequeue()
 		{
 			Chunk result;
-			while (true)
+			bool successReading;
+
+			while (!_inputFinished.IsSet)
 			{
-				var isQueueEmpty =_queue.TryDequeue(out result); //todo условие выхода из процессора (manualreset)
-				Console.WriteLine(isQueueEmpty);
-				if (isQueueEmpty)
-					_manualResetEvent.WaitOne();
+				if (_queue.IsEmpty)
+				{
+					continue;
+				}
+				successReading =_queue.TryDequeue(out result); //todo условие выхода из процессора (manualreset)
+				Console.WriteLine(successReading);
 			}
+			Console.WriteLine("ReadingDone");
+			Console.Beep(880, 600);
 		}
 
 		public void Start()

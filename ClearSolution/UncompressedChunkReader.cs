@@ -6,7 +6,7 @@ namespace ClearSolution
 	{
 		public UncompressedChunkReader(
 			MultithreadingQueue<Chunk> queue,
-			ManualResetEvent manualResetEvent) 
+			ManualResetEventSlim manualResetEvent) 
 			: base(
 				queue, 
 				manualResetEvent)

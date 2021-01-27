@@ -13,15 +13,15 @@ namespace VeeamGZip
 		static void Main(string[] args)
 		{
 			var parsedArgs = new CliParser().CliParse(args);
-			var sets = new ConfigurationBuilder()
-				.AddJsonFile("appsettings.json")
+			var threadingPreferences = new ConfigurationBuilder()
+				.AddJsonFile("appsettings.json", false)
 				.Build()
 				.GetSection("Settings")
 				.Get<ThreadingPreferences>(); // todo why exception?
 			
-			if (sets==null)
+			if (threadingPreferences==null)
 			{
-				Debugger.Break();
+				threadingPreferences=ThreadingPreferences.Auto;
 			}
 
 			var bufferSize = 2 * 1024 * 1024;
