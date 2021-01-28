@@ -6,7 +6,7 @@ namespace ClearSolution
 {
 	public abstract class ChunkReader<T>
 	{
-		public bool IsFileEnd { get; private set; }
+		private static int count=0;
 		private MultithreadingQueue<T> _queue;
 		private ManualResetEventSlim _manualResetEvent;
 
@@ -32,10 +32,12 @@ namespace ClearSolution
 				while ((readBytes = filestream.Read(buffer)) > 0)
 				{
 					_queue.Enqueue(CreateChunk(buffer.Clone() as byte[], readBytes));
-					Console.WriteLine(readBytes);
+					Console.WriteLine($"Reader count = {++count}");
+					_manualResetEvent.Set();
+					//Console.WriteLine(readBytes +" - Read bytes");
 				}
 				Console.WriteLine("File end");
-				_manualResetEvent.Set();
+				_manualResetEvent.Reset();
 			}
 		}
 
