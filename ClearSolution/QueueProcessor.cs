@@ -5,11 +5,10 @@ namespace ClearSolution
 {
 	public class QueueProcessor
 	{
-		private static int count=0;
 		private readonly MultithreadingQueue<Chunk> _inputQueue;
 		private readonly MultithreadingQueue<Chunk> _outputQueue;
 		private readonly ManualResetEventSlim _inputFinished;
-		private readonly ManualResetEventSlim _outputStarted;
+		private readonly CountdownEvent _outputStarted;
 		private readonly GzipWorker _gzipWorker;
 
 		public QueueProcessor(
@@ -17,7 +16,7 @@ namespace ClearSolution
 			MultithreadingQueue<Chunk> outputQueue,
 			ManualResetEventSlim inputFinished,
 			GzipWorker gzipWorker,
-			ManualResetEventSlim outputStarted)
+			CountdownEvent outputStarted)
 		{
 			_inputQueue = inputQueue;
 			_outputQueue = outputQueue;
@@ -31,35 +30,30 @@ namespace ClearSolution
 			Chunk result;
 
 			_inputFinished.Wait();
-			bool successReading;
 
 			while (_inputFinished.IsSet || !_inputQueue.IsEmpty)
 			{
-				successReading = _inputQueue.TryDequeue(out result);
+				var successReading = _inputQueue.TryDequeue(out result);
 				if (!successReading)
 				{
 					continue;
 				}
 
-				//Console.WriteLine(result.Size + " - read bytes from queue in Thread: " + Thread.CurrentThread.ManagedThreadId);
-				
 				var processedChunk = _gzipWorker.CompressChunk(result);
 				_outputQueue.Enqueue(processedChunk);
-				Console.WriteLine($"producer count = {++count}");
-				
-			//	Console.WriteLine(processedChunk.Size + " - processed bytes in Thread: " + Thread.CurrentThread.ManagedThreadId);
-				_outputStarted.Set();
-			} 
-			_outputStarted.Reset();
-			Console.WriteLine("Processing Done");
+				Console.WriteLine($"producer count = {result.Order}");
+			}
+
+			_outputStarted.Signal();
+			Console.WriteLine($"Processing done in Thread with id: {Thread.CurrentThread.ManagedThreadId}.");
 		}
 
-		public void Start()
+		public void Start(int? threadsCount)
 		{
-			new Thread(Dequeue).Start();
-			new Thread(Dequeue).Start();
-			new Thread(Dequeue).Start();
-			new Thread(Dequeue).Start();
+			for (int i = 0; i < threadsCount; i++)
+			{
+				new Thread(Dequeue).Start();
+			}
 		}
 	}
 }

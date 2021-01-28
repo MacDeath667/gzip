@@ -6,10 +6,10 @@ namespace ClearSolution
 	{
 		public CompressedChunkWriter(
 			MultithreadingQueue<Chunk> queue,
-			ManualResetEventSlim manualResetEvent)
+			CountdownEvent countdownEvent)
 			: base(
 				queue,
-				manualResetEvent)
+				countdownEvent)
 		{
 		}
 	}

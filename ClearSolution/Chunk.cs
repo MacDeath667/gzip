@@ -4,5 +4,6 @@
 	{
 		public byte[] Data;
 		public int Size;
+		public int Order;
 	}
 }

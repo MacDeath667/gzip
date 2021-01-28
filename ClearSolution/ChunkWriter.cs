@@ -7,13 +7,13 @@ namespace ClearSolution
 	public abstract class ChunkWriter<T>
 	{
 		private static int count=0;
-		private MultithreadingQueue<T> _queue;
-		private ManualResetEventSlim _manualResetEvent;
+		private MultithreadingQueue<Chunk> _queue;
+		private CountdownEvent _countdownEvent;
 
-		public ChunkWriter(MultithreadingQueue<T> queue, ManualResetEventSlim manualResetEvent)
+		public ChunkWriter(MultithreadingQueue<Chunk> queue, CountdownEvent countdownEvent)
 		{
 			_queue = queue;
-			_manualResetEvent = manualResetEvent;
+			_countdownEvent = countdownEvent;
 		}
 
 		public void Start(string filepath)
@@ -29,17 +29,18 @@ namespace ClearSolution
 
 		private void WriteChunks(string filepath)
 		{
-			_manualResetEvent.Wait();
 			using (var filestream = File.OpenWrite(filepath))
 			{
-				while (_manualResetEvent.IsSet || !_queue.IsEmpty)
+				while (!_countdownEvent.IsSet || !_queue.IsEmpty)
 				{
 					if (_queue.TryDequeue(out var chunk))
 					{
-						Console.WriteLine($"writer count = {++count}");
+						Console.WriteLine($"write chunk with number = {chunk.Order}");
+						//Thread.Sleep(150);
 						//Console.WriteLine( " - write bytes");
 					}
 				}
+				Console.WriteLine("Write done");
 				Console.WriteLine("Write done");
 			}
 		}

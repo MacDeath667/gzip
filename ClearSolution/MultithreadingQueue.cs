@@ -6,10 +6,12 @@ namespace ClearSolution
 	public class MultithreadingQueue<T>
 	{
 		private Queue<T> _baseQueue;
+		private int _dataProcessorThreadsCount;
 
-		public MultithreadingQueue()
+		public MultithreadingQueue(int dataProcessorThreadsCount)
 		{
 			_baseQueue = new Queue<T>();
+			_dataProcessorThreadsCount = dataProcessorThreadsCount;
 		}
 
 		public bool IsEmpty =>
@@ -22,7 +24,7 @@ namespace ClearSolution
 			{
 				while (true)
 				{
-					if (_baseQueue.Count < 8)
+					if (_baseQueue.Count < _dataProcessorThreadsCount)
 					{
 						_baseQueue.Enqueue(data);
 						Monitor.PulseAll(_baseQueue);

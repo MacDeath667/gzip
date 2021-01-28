@@ -1,4 +1,5 @@
 ﻿using System.Threading;
+using Microsoft.Extensions.Configuration;
 
 namespace ClearSolution
 {
@@ -7,24 +8,34 @@ namespace ClearSolution
 		private static MultithreadingQueue<Chunk> _chunksQueue;
 		private static MultithreadingQueue<Chunk> _processedQueue;
 		private static ManualResetEventSlim _manualResetEventRead;
-		private static ManualResetEventSlim _manualResetEventWrite;
+		private static CountdownEvent _countdownEvent;
 
 		//private ChunkReader<Chunk> _chunkReader; //todo remove or assign to chunkReader
 
 		static void Main(string[] args)
 		{
-			var filepath = @"C:\Temp\1.exe";
-			var outpath = @"C:\Temp\1.exe.gzip";
+			var cliArgs = new CliParser().CliParse(args);
+			var filepath = cliArgs.FilePath;
+			var outpath = cliArgs.OutPath;
 
-			_chunksQueue = new MultithreadingQueue<Chunk>();
-			_processedQueue = new MultithreadingQueue<Chunk>();
+			var threadingPreferences = new AutoThreadingPreferences(); // todo why exception?
+			var dataProcessorThreadsCount = (int) (threadingPreferences.Threads-2);
+
+			_chunksQueue = new MultithreadingQueue<Chunk>(dataProcessorThreadsCount);
+			_processedQueue = new MultithreadingQueue<Chunk>(dataProcessorThreadsCount);
 			_manualResetEventRead = new ManualResetEventSlim(false);
-			_manualResetEventWrite = new ManualResetEventSlim(false);
+
+			_countdownEvent = new CountdownEvent(dataProcessorThreadsCount);
 
 
 			new UncompressedChunkReader(_chunksQueue, _manualResetEventRead).Start(filepath);
-			new QueueProcessor(_chunksQueue, _processedQueue, _manualResetEventRead, new GzipWorker(), _manualResetEventWrite).Start();
-			new CompressedChunkWriter(_processedQueue, _manualResetEventWrite).StartInSuchThread(outpath);
+			new QueueProcessor(_chunksQueue, 
+					_processedQueue, 
+					_manualResetEventRead, 
+					new GzipWorker(),
+					_countdownEvent)
+				.Start(dataProcessorThreadsCount);
+			new CompressedChunkWriter(_processedQueue, _countdownEvent).StartInSuchThread(outpath);
 		}
 	}
 }
