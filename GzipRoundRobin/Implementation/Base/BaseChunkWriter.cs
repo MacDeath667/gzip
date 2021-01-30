@@ -8,6 +8,15 @@ namespace GzipRoundRobin.Implementation.Base
 {
 	public class BaseChunkWriter : IWriter<IChunk>
 	{
+		public BaseChunkWriter(AutoThreadingPreferences settings)
+		{
+			Reset = new CountdownEvent(settings.Threads);
+			Queues = new MultithreadingQueue<IChunk>[settings.Threads];
+			for (int i = 0; i < Queues.Length; i++)
+			{
+				Queues[i] = new MultithreadingQueue<IChunk>(settings.Threads);
+			}
+		}
 		public CountdownEvent Reset { get; set; }
 		public MultithreadingQueue<IChunk>[] Queues { get; set; }
 		
@@ -28,7 +37,7 @@ namespace GzipRoundRobin.Implementation.Base
 						if (Queues[i].TryDequeue(out var chunk))
 						{
 							var binaryWriter = new BinaryWriter(filestream);
-							binaryWriter.Write(chunk.Size);
+							//binaryWriter.Write(chunk.Size);
 							binaryWriter.Write(chunk.Data);
 						}
 					}

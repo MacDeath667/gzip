@@ -1,5 +1,4 @@
 ﻿using System.Threading;
-using Microsoft.Extensions.Configuration;
 
 namespace ClearSolution
 {
@@ -19,7 +18,7 @@ namespace ClearSolution
 			var outpath = cliArgs.OutPath;
 
 			var threadingPreferences = new AutoThreadingPreferences(); // todo why exception?
-			var dataProcessorThreadsCount = (int) (threadingPreferences.Threads-2);
+			var dataProcessorThreadsCount = (int)(threadingPreferences.Threads-2);
 
 			_chunksQueue = new MultithreadingQueue<Chunk>(dataProcessorThreadsCount);
 			_processedQueue = new MultithreadingQueue<Chunk>(dataProcessorThreadsCount);

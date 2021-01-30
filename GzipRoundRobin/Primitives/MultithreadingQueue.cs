@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 
 namespace GzipRoundRobin.Primitives
@@ -15,8 +16,8 @@ namespace GzipRoundRobin.Primitives
 		}
 
 		public bool IsEmpty =>
-			 _baseQueue.Count == 0;
-		
+			_baseQueue.Count == 0;
+
 
 		public void Enqueue(T data)
 		{
@@ -38,9 +39,10 @@ namespace GzipRoundRobin.Primitives
 
 		public bool TryDequeue(out T data)
 		{
-			lock (_baseQueue)
+			try
 			{
-				if (_baseQueue.Count > 0)
+				var isLocked = Monitor.TryEnter(_baseQueue, 150);
+				if (isLocked && _baseQueue.Count > 0)
 				{
 					data = _baseQueue.Dequeue();
 					Monitor.PulseAll(_baseQueue);
@@ -49,6 +51,13 @@ namespace GzipRoundRobin.Primitives
 
 				data = default;
 				return false;
+			}
+			finally
+			{
+				if (Monitor.IsEntered(_baseQueue))
+				{
+					Monitor.Exit(_baseQueue);
+				}
 			}
 		}
 	}

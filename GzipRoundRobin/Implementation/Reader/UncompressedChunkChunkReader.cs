@@ -1,31 +1,37 @@
 ﻿using System;
 using System.IO;
 using GzipRoundRobin.Implementation.Base;
+using GzipRoundRobin.Primitives;
 
-namespace GzipRoundRobin.Implementation
+namespace GzipRoundRobin.Implementation.Reader
 {
 	public class UncompressedChunkChunkReader : BaseChunkReader
 	{
+		public UncompressedChunkChunkReader(AutoThreadingPreferences settings) : base(settings)
+		{
+			_buffer = new byte[settings.BufferBytes];
+		}
+
 		protected override void ReadChunks(string filepath)
 		{
 			using (var filestream = File.Open(filepath, FileMode.Open))
 			{
-				var buffer = new byte[2 * 1024 * 1024];
-				var readBytes = 0;
+				int readBytes;
+				var i = 0;
 				Reset.Set();
-				while ((readBytes = filestream.Read(buffer)) > 0)
+				while ((readBytes = filestream.Read(_buffer)) > 0)
 				{
-					var i = 0;
 					var index = i % Queues.Length;
-
-					Queues[index].Enqueue(CreateChunk(buffer.Clone() as byte[], readBytes));
+					Queues[index].Enqueue(CreateChunk(_buffer.Clone() as byte[], readBytes));
 					++i;
-					Console.WriteLine($"Reader count = {i}");
+					//Console.WriteLine($"Reader count = {i}");
 				}
 
 				Console.WriteLine("File end");
 				Reset.Reset();
 			}
 		}
+
+		private byte[] _buffer;
 	}
 }
