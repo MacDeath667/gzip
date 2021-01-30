@@ -41,7 +41,6 @@ namespace ClearSolution
 
 				var processedChunk = _gzipWorker.CompressChunk(result);
 				_outputQueue.Enqueue(processedChunk);
-				Console.WriteLine($"producer count = {result.Order}");
 			}
 
 			_outputStarted.Signal();

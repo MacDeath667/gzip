@@ -35,11 +35,14 @@ namespace ClearSolution
 				{
 					if (_queue.TryDequeue(out var chunk))
 					{
-						Console.WriteLine($"write chunk with number = {chunk.Order}");
+						var binaryWriter = new BinaryWriter(filestream);
+						binaryWriter.Write(chunk.Size);
+						binaryWriter.Write(chunk.Data);
 						//Thread.Sleep(150);
 						//Console.WriteLine( " - write bytes");
 					}
 				}
+				
 				Console.WriteLine("Write done");
 				Console.WriteLine("Write done");
 			}

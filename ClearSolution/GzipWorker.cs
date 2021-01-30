@@ -17,8 +17,7 @@ namespace ClearSolution
 					return new Chunk()
 					{
 						Data = output.ToArray(),
-						Size = (int) output.Length,
-						Order = data.Order
+						Size = (int) output.Length
 					};
 				}
 			}

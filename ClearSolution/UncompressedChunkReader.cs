@@ -13,13 +13,12 @@ namespace ClearSolution
 		{
 		}
 
-		protected override Chunk CreateChunk(byte[] buffer, int readBytes, int order)
+		protected override Chunk CreateChunk(byte[] buffer, int readBytes)
 		{
 			return new Chunk()
 			{
 				Data = buffer,
-				Size = readBytes,
-				Order = order
+				Size = readBytes
 			};
 		}
 	}
