@@ -3,7 +3,7 @@ using System.Threading;
 
 namespace ClearSolution
 {
-	public class QueueProcessor
+	public class DataProcessor
 	{
 		private readonly MultithreadingQueue<Chunk> _inputQueue;
 		private readonly MultithreadingQueue<Chunk> _outputQueue;
@@ -11,7 +11,7 @@ namespace ClearSolution
 		private readonly CountdownEvent _outputStarted;
 		private readonly GzipWorker _gzipWorker;
 
-		public QueueProcessor(
+		public DataProcessor(
 			MultithreadingQueue<Chunk> inputQueue,
 			MultithreadingQueue<Chunk> outputQueue,
 			ManualResetEventSlim inputFinished,

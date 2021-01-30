@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
 
-namespace GzipRoundRobin.Elements
+namespace GzipRoundRobin.Primitives
 {
 	public class MultithreadingQueue<T>
 	{

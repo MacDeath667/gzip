@@ -29,7 +29,7 @@ namespace ClearSolution
 
 
 			new UncompressedChunkReader(_chunksQueue, _manualResetEventRead).Start(filepath);
-			new QueueProcessor(_chunksQueue, 
+			new DataProcessor(_chunksQueue, 
 					_processedQueue, 
 					_manualResetEventRead, 
 					new GzipWorker(),
