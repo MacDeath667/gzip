@@ -1,9 +1,7 @@
-﻿using GzipRoundRobin.Implementation;
-using GzipRoundRobin.Implementation.Base;
+﻿using GzipRoundRobin.Implementation.Base;
 using GzipRoundRobin.Implementation.DataProcessor;
 using GzipRoundRobin.Implementation.Reader;
 using GzipRoundRobin.Primitives;
-using Microsoft.Extensions.Configuration;
 
 namespace GzipRoundRobin
 {
@@ -19,11 +17,11 @@ namespace GzipRoundRobin
 			var reader = new UncompressedChunkChunkReader(threadingPreferences);
 			var writer = new BaseChunkWriter(threadingPreferences);
 			//var dataProcessor = new UncompressChunkProcessor(reader, writer, new GzipWorker());
-			var bypassdataProcessor = new BypassProcessor(reader, writer, new GzipWorker());
+			var bypassProcessor = new BypassProcessor(reader, writer, new GzipWorker());
 			
 			reader.StartRead(parsedArgs.FilePath);
 			// dataProcessor.Start(threadingPreferences.Threads);
-			bypassdataProcessor.Start(threadingPreferences.Threads);
+			bypassProcessor.Start(threadingPreferences.Threads);
 			writer.StartWrite(parsedArgs.OutPath);
 		}
 	}

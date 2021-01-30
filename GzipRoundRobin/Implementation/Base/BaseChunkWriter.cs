@@ -38,7 +38,7 @@ namespace GzipRoundRobin.Implementation.Base
 						{
 							var binaryWriter = new BinaryWriter(filestream);
 							//binaryWriter.Write(chunk.Size);
-							binaryWriter.Write(chunk.Data);
+							binaryWriter.Write(chunk.Data,0,chunk.Size);
 						}
 					}
 				}

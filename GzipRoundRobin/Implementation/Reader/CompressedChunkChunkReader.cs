@@ -33,8 +33,8 @@ namespace GzipRoundRobin.Implementation
 					//Console.WriteLine($"Reader count = {i}");
 				}
 
-				Console.WriteLine("File end");
 				Reset.Reset();
+				Console.WriteLine("File end");
 			}
 		}
 

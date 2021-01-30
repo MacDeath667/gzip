@@ -50,7 +50,6 @@ namespace GzipRoundRobin.Implementation.Base
 		public void Start(int threadsCount)
 		{
 			Console.WriteLine($"processing start in {threadsCount} threads");
-			var threads = new Thread[threadsCount];
 			
 			for (int i = 0; i < threadsCount; i++)
 			{

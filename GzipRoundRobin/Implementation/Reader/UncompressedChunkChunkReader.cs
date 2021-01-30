@@ -24,7 +24,6 @@ namespace GzipRoundRobin.Implementation.Reader
 					var index = i % Queues.Length;
 					Queues[index].Enqueue(CreateChunk(_buffer.Clone() as byte[], readBytes));
 					++i;
-					//Console.WriteLine($"Reader count = {i}");
 				}
 
 				Console.WriteLine("File end");
