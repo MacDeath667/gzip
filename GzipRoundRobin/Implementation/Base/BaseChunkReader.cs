@@ -9,12 +9,12 @@ namespace GzipRoundRobin.Implementation.Base
 {
 	public abstract class BaseChunkReader : IReader<IChunk>
 	{
-		public BaseChunkReader(AutoThreadingPreferences settings)
+		protected BaseChunkReader(AutoThreadingPreferences settings)
 		{
 			Queues = new MultithreadingQueue<IChunk>[settings.Threads];
 			for (int i = 0; i < Queues.Length; i++)
 			{
-				Queues[i] = new MultithreadingQueue<IChunk>(settings.Threads);
+				Queues[i] = new MultithreadingQueue<IChunk>(settings.Threads); //todo limit by ram
 			}
 			Reset = new ManualResetEventSlim(false);
 		}

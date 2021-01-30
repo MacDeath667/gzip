@@ -1,18 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading;
 
 namespace GzipRoundRobin.Primitives
 {
 	public class MultithreadingQueue<T>
 	{
-		private Queue<T> _baseQueue;
-		private int _dataProcessorThreadsCount;
+		private readonly Queue<T> _baseQueue;
+		private readonly int _queueLimit;
 
-		public MultithreadingQueue(int dataProcessorThreadsCount)
+		public MultithreadingQueue(int queueLimit)
 		{
 			_baseQueue = new Queue<T>();
-			_dataProcessorThreadsCount = dataProcessorThreadsCount;
+			_queueLimit = queueLimit;
 		}
 
 		public bool IsEmpty =>
@@ -25,10 +24,9 @@ namespace GzipRoundRobin.Primitives
 			{
 				while (true)
 				{
-					if (_baseQueue.Count < _dataProcessorThreadsCount)
+					if (_baseQueue.Count < _queueLimit)
 					{
 						_baseQueue.Enqueue(data);
-						Monitor.PulseAll(_baseQueue);
 						return;
 					}
 

@@ -23,7 +23,7 @@ namespace GzipRoundRobin.Implementation.Base
 
 		private void Dequeue(int processorId)
 		{
-			Console.WriteLine($"Processing start in {processorId} threads");
+			Console.WriteLine($"Processing start in thread: {processorId}");
 			var inputQueue = Reader.Queues[processorId];
 			var outputQueue = Writer.Queues[processorId];
 
@@ -34,6 +34,7 @@ namespace GzipRoundRobin.Implementation.Base
 				var successReading = inputQueue.TryDequeue(out var chunk);
 				if (!successReading)
 				{
+					Thread.Sleep(1);
 					continue;
 				}
 
@@ -45,11 +46,11 @@ namespace GzipRoundRobin.Implementation.Base
 			Console.WriteLine($"Data processor: {processorId} finished.");
 		}
 
-		protected abstract IChunk ProcessChunkData(IChunk result);
+		protected abstract IChunk ProcessChunkData(IChunk chunk);
 
 		public void Start(int threadsCount)
 		{
-			Console.WriteLine($"processing start in {threadsCount} threads");
+			Console.WriteLine($"Processing start in {threadsCount} threads");
 			
 			for (int i = 0; i < threadsCount; i++)
 			{

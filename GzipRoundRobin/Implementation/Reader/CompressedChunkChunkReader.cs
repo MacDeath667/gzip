@@ -3,7 +3,7 @@ using System.IO;
 using GzipRoundRobin.Implementation.Base;
 using GzipRoundRobin.Primitives;
 
-namespace GzipRoundRobin.Implementation
+namespace GzipRoundRobin.Implementation.Reader
 {
 	public class CompressedChunkChunkReader : BaseChunkReader
 	{
@@ -21,7 +21,7 @@ namespace GzipRoundRobin.Implementation
 				{
 					var chunkSize = ReadHeader(filepath);
 					var buffer = new byte[chunkSize];
-					if ((_readBytes = filestream.Read(buffer)) <= 0)
+					if ((_readBytes = filestream.Read(buffer, 0, buffer.Length)) <= 0)
 					{
 						break;
 					}
@@ -45,7 +45,7 @@ namespace GzipRoundRobin.Implementation
 			{
 				var buffer = new byte[4];
 				Reset.Set();
-				_readBytes = filestream.Read(buffer);
+				_readBytes = filestream.Read(buffer,0,buffer.Length);
 				if (_readBytes != buffer.Length)
 				{
 					throw new InvalidCastException("Неожиданное окончание заголовка с размером чанка");

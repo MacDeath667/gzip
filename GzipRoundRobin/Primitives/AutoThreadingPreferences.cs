@@ -5,6 +5,11 @@ namespace GzipRoundRobin.Primitives
 {
 	public class AutoThreadingPreferences
 	{
+		public static AutoThreadingPreferences Create()
+		{
+			return new AutoThreadingPreferences();
+		}
+		
 		public AutoThreadingPreferences()
 		{
 			SimpleThreadingPreferences preferences = default;

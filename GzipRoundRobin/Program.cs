@@ -12,9 +12,9 @@ namespace GzipRoundRobin
 			//todo make fabric for compress/decompress 
 			
 			var parsedArgs = new CliParser().CliParse(args);
-			var threadingPreferences = new AutoThreadingPreferences();
+			var threadingPreferences = AutoThreadingPreferences.Create();
 
-			var reader = new UncompressedChunkChunkReader(threadingPreferences);
+			var reader = new UncompressedChunkReader(threadingPreferences);
 			var writer = new BaseChunkWriter(threadingPreferences);
 			//var dataProcessor = new UncompressChunkProcessor(reader, writer, new GzipWorker());
 			var bypassProcessor = new BypassProcessor(reader, writer, new GzipWorker());

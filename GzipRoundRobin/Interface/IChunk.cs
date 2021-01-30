@@ -2,7 +2,7 @@
 {
 	public interface IChunk
 	{
-		public int Size { get; set; }
-		public byte[] Data { get; set; }
+		int Size { get; set; }
+		byte[] Data { get; set; }
 	}
 }

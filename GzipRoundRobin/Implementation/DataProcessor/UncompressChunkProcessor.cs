@@ -16,9 +16,9 @@ namespace GzipRoundRobin.Implementation.DataProcessor
 		{
 		}
 
-		protected override IChunk ProcessChunkData(IChunk result)
+		protected override IChunk ProcessChunkData(IChunk chunk)
 		{
-			var processedChunk = GzipWorker.UncompressChunk(result);
+			var processedChunk = GzipWorker.UncompressChunk(chunk);
 			return processedChunk;
 		}
 	}
