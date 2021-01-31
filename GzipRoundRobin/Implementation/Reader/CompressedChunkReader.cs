@@ -32,7 +32,7 @@ namespace GzipRoundRobin.Implementation.Reader
 					}
 
 					var index = i % Queues.Length;
-					Console.WriteLine($"compressed chunk: {i}, size: {chunkSize}");
+					Console.WriteLine($"compressed chunk: {i}, size: {_readBytes}");
 					Queues[index].Enqueue(CreateChunk(buffer.Clone() as byte[], _readBytes));
 					++i;
 				}

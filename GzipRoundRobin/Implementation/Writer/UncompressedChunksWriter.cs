@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using GzipRoundRobin.Implementation.Base;
 using GzipRoundRobin.Interface;
 using GzipRoundRobin.Primitives;
@@ -22,6 +23,7 @@ namespace GzipRoundRobin.Implementation.Writer
 
 		protected override void WriteChunk(BinaryWriter binaryWriter, IChunk chunk)
 		{
+			Console.WriteLine($"Uncompressed writer: {chunk.Size}");
 			binaryWriter.Write(chunk.Data, 0, chunk.Size);
 		}
 	}
