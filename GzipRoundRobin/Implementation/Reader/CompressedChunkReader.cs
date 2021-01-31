@@ -18,6 +18,7 @@ namespace GzipRoundRobin.Implementation.Reader
 				Reset.Set();
 				var i = 0;
 				var bufferSize = ReadBufferSizeHeader(filestream);
+				Console.WriteLine($"Unpacking with buffersize: {bufferSize}");
 				while (true)
 				{
 					int chunkSize = ReadCompressedDataLength(filestream);
@@ -26,9 +27,9 @@ namespace GzipRoundRobin.Implementation.Reader
 					{
 						break;
 					}
-					
-					var index = i % Queues.Length;
 
+					var index = i % Queues.Length;
+					Console.WriteLine($"compressed chunk: {i}, size: {chunkSize}");
 					Queues[index].Enqueue(CreateChunk(buffer.Clone() as byte[], _readBytes));
 					++i;
 				}
@@ -40,25 +41,40 @@ namespace GzipRoundRobin.Implementation.Reader
 
 		private int ReadCompressedDataLength(FileStream fileStream)
 		{
-			var buffer = new byte[4];
-			var read = fileStream.Read(buffer, 0, buffer.Length);
-			if (read !=buffer.Length)
+			var headerSize = ReadIntFromFilestream(fileStream);
+			if (headerSize < 0)
 			{
-				throw new InvalidCastException("Не удалось прочитать размер сжатого чанка");
+				throw new InvalidChunkContentException("Не удалось прочитать размер сжатого чанка");
 			}
-			return BitConverter.ToInt32(buffer, 0);
+
+			return headerSize;
 		}
+
 
 		private int ReadBufferSizeHeader(FileStream fileStream)
 		{
-			var buffer = new byte[4];
-			var read = fileStream.Read(buffer, 0, buffer.Length);
-			if (read !=buffer.Length)
+			var bufferSize = ReadIntFromFilestream(fileStream);
+			if (bufferSize < 0)
 			{
-				throw new InvalidCastException("Не удалось прочитать размер буффера");
+				throw new InvalidChunkContentException("Не удалось прочитать размер буфера");
 			}
+
+			return bufferSize;
+		}
+
+		private int ReadIntFromFilestream(FileStream fileStream)
+		{
+			var buffer = new byte[4];
+
+			var read = fileStream.Read(buffer, 0, buffer.Length);
+			if (read != buffer.Length &&read !=0)
+			{
+				return -1;
+			}
+
 			return BitConverter.ToInt32(buffer, 0);
 		}
+
 		private int _readBytes;
 	}
 }

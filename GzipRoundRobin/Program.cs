@@ -24,13 +24,13 @@ namespace GzipRoundRobin
 			writer.StartWrite(parsedArgs.OutPath);
 			
 			
-			// var creader = new CompressedChunkReader(threadingPreferences);
-			// var cwriter = new UncompressedChunksWriter(threadingPreferences);
-			// var cdataProcessor = new UncompressChunkProcessor(creader, cwriter, new GzipWorker());
-			//
-			// creader.StartRead(parsedArgs.OutPath);
-			// cdataProcessor.Start(threadingPreferences.Threads);
-			// cwriter.StartWrite(parsedArgs.OutPath+".restored.exe");
+			var creader = new CompressedChunkReader(threadingPreferences);
+			var cwriter = new UncompressedChunksWriter(threadingPreferences);
+			var cdataProcessor = new UncompressChunkProcessor(creader, cwriter, new GzipWorker());
+			
+			creader.StartRead(parsedArgs.OutPath);
+			cdataProcessor.Start(threadingPreferences.Threads);
+			cwriter.StartWrite(parsedArgs.OutPath+".restored.exe");
 		}
 	}
 }

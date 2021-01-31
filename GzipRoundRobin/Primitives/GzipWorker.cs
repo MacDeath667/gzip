@@ -25,15 +25,16 @@ namespace GzipRoundRobin.Primitives
 		
 		public IChunk UncompressChunk(IChunk data)
 		{
-			using (var output = new MemoryStream())
+			var destination = new byte[data.Size];
+			using (var input = new MemoryStream(data.Data))
 			{
-				using (var compressStream = new GZipStream(output, CompressionMode.Decompress))
+				using (var compressStream = new GZipStream(input, CompressionMode.Decompress))
 				{
-					compressStream.Write(data.Data, 0, data.Size);
+					compressStream.Read(destination, 0, data.Size);
 					return new DataChunk()
 					{
-						Data = output.ToArray(),
-						Size = (int) output.Length
+						Data = destination,
+						Size = (int) input.Length
 					};
 				}
 			}
