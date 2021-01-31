@@ -19,6 +19,7 @@ namespace GzipRoundRobin.Implementation.Reader
 				int readBytes;
 				var i = 0;
 				Reset.Set();
+				StartWork.Set();
 				while ((readBytes = filestream.Read(_buffer, 0,_buffer.Length)) > 0)
 				{
 					var index = i % Queues.Length;

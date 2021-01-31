@@ -16,6 +16,7 @@ namespace GzipRoundRobin.Implementation.Reader
 			using (var filestream = File.Open(filepath, FileMode.Open))
 			{
 				Reset.Set();
+				StartWork.Set();
 				var i = 0;
 				var bufferSize = ReadBufferSizeHeader(filestream);
 				Console.WriteLine($"Unpacking with buffersize: {bufferSize}");

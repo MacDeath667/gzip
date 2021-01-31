@@ -12,7 +12,7 @@ namespace GzipRoundRobin.Implementation.Writer
 			_bufferBytes = settings.BufferBytes;
 		}
 
-		public override void StartWrite(string filepath)
+		public override void Start(string filepath)
 		{
 			using (var filestream = File.Create(filepath))
 			using (var binaryWriter = new BinaryWriter(filestream))

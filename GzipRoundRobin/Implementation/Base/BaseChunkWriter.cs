@@ -22,7 +22,7 @@ namespace GzipRoundRobin.Implementation.Base
 		public CountdownEvent Reset { get; set; }
 		public MultithreadingQueue<IChunk>[] Queues { get; set; }
 		
-		public abstract void StartWrite(string filepath);
+		public abstract void Start(string filepath);
 
 		protected void Write(BinaryWriter binaryWriter)
 		{

@@ -16,11 +16,13 @@ namespace GzipRoundRobin.Implementation.Base
 				Queues[i] = new MultithreadingQueue<IChunk>(settings.Threads); //todo limit by ram
 			}
 			Reset = new ManualResetEventSlim(false);
+			StartWork = new ManualResetEventSlim(false);
 		}
 		public ManualResetEventSlim Reset { get; set; }
+		public ManualResetEventSlim StartWork { get; set; }
 		public MultithreadingQueue<IChunk>[] Queues { get; set; }
 
-		public void StartRead(string filepath)
+		public void Start(string filepath)
 		{
 			Console.WriteLine("reading start single thread");
 			new Thread(() => ReadChunks(filepath)).Start();

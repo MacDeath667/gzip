@@ -6,7 +6,8 @@ namespace GzipRoundRobin.Interface
 	public interface IReader<T>
 	{
 		ManualResetEventSlim Reset { get; set; }
+		ManualResetEventSlim StartWork { get; set; }
 		MultithreadingQueue<T>[] Queues { get; set; }
-		void StartRead(string filepath);
+		void Start(string filepath);
 	}
 }

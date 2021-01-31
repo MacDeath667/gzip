@@ -7,6 +7,6 @@ namespace GzipRoundRobin.Interface
 	{
 		CountdownEvent Reset { get; set; }
 		MultithreadingQueue<T>[] Queues { get; set; }
-		void StartWrite(string filepath);
+		void Start(string filepath);
 	}
 }

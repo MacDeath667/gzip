@@ -27,7 +27,9 @@ namespace GzipRoundRobin.Implementation.Base
 			var inputQueue = Reader.Queues[processorId];
 			var outputQueue = Writer.Queues[processorId];
 
-			Reader.Reset.Wait();
+			Reader.StartWork.Wait();
+			
+			Console.WriteLine("waited");
 
 			while (Reader.Reset.IsSet || !inputQueue.IsEmpty)
 			{
