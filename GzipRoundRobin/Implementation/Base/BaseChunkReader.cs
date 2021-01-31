@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Dynamic;
 using System.Threading;
 using GzipRoundRobin.Implementation.Chunks;
 using GzipRoundRobin.Interface;

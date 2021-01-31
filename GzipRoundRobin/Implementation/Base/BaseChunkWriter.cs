@@ -6,9 +6,9 @@ using GzipRoundRobin.Primitives;
 
 namespace GzipRoundRobin.Implementation.Base
 {
-	public class BaseChunkWriter : IWriter<IChunk>
+	public abstract class BaseChunkWriter : IWriter<IChunk>
 	{
-		public BaseChunkWriter(AutoThreadingPreferences settings)
+		protected BaseChunkWriter(AutoThreadingPreferences settings)
 		{
 			Reset = new CountdownEvent(settings.Threads);
 			Queues = new MultithreadingQueue<IChunk>[settings.Threads];
@@ -18,53 +18,35 @@ namespace GzipRoundRobin.Implementation.Base
 			}
 		}
 
+
 		public CountdownEvent Reset { get; set; }
 		public MultithreadingQueue<IChunk>[] Queues { get; set; }
+		
+		public abstract void StartWrite(string filepath);
 
-		public void StartWrite(string filepath)
+		protected void Write(BinaryWriter binaryWriter)
 		{
-			WriteChunks(filepath);
-		}
-
-		private void WriteChunks(string filepath)
-		{
-			using (var filestream = File.Create(filepath))
-			using (var binaryWriter = new BinaryWriter(filestream))
+			while (true)
 			{
-				while (true)
+				foreach (var currentQueue in Queues)
 				{
-					foreach (var currentQueue in Queues)
+					IChunk chunk;
+					while (!currentQueue.TryDequeue(out chunk))
 					{
-						IChunk chunk;
-						while (!currentQueue.TryDequeue(out chunk))
+						if (Reset.IsSet && currentQueue.IsEmpty)
 						{
-							if (Reset.IsSet && currentQueue.IsEmpty)
-							{
-								Console.WriteLine("Write done");
-								return;
-							}
-							Thread.Sleep(1);
+							Console.WriteLine("Write done");
+							return;
 						}
-						//binaryWriter.Write(chunk.Size);
-						binaryWriter.Write(chunk.Data,0,chunk.Size);
-					}
-				}
 
-				// var queueIndex = 0;
-				// while (!Reset.IsSet)
-				// {
-				// 	for (int i = 0; i < Queues.Length; i++)
-				// 	{
-				// 		if (Queues[i].TryDequeue(out var chunk))
-				// 		{
-				// 			var binaryWriter = new BinaryWriter(filestream);
-				// 			//binaryWriter.Write(chunk.Size);
-				// 			binaryWriter.Write(chunk.Data,0,chunk.Size);
-				// 		}
-				// 	}
-				// }
-				// Console.WriteLine("Write done");
+						Thread.Sleep(1);
+					}
+
+					WriteChunk(binaryWriter, chunk);
+				}
 			}
 		}
+
+		protected abstract void WriteChunk(BinaryWriter binaryWriter, IChunk chunk);
 	}
 }

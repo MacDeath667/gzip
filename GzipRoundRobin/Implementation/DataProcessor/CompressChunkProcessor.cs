@@ -6,7 +6,7 @@ namespace GzipRoundRobin.Implementation.DataProcessor
 {
 	public class CompressChunkProcessor : BaseChunkProcessor
 	{
-		protected CompressChunkProcessor(
+		public CompressChunkProcessor(
 			IReader<IChunk> reader,
 			IWriter<IChunk> writer,
 			GzipWorker gzipWorker) : base(

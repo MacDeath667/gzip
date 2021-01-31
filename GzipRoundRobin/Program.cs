@@ -1,6 +1,7 @@
 ﻿using GzipRoundRobin.Implementation.Base;
 using GzipRoundRobin.Implementation.DataProcessor;
 using GzipRoundRobin.Implementation.Reader;
+using GzipRoundRobin.Implementation.Writer;
 using GzipRoundRobin.Primitives;
 
 namespace GzipRoundRobin
@@ -15,14 +16,21 @@ namespace GzipRoundRobin
 			var threadingPreferences = AutoThreadingPreferences.Create();
 
 			var reader = new UncompressedChunkReader(threadingPreferences);
-			var writer = new BaseChunkWriter(threadingPreferences);
-			//var dataProcessor = new UncompressChunkProcessor(reader, writer, new GzipWorker());
-			var bypassProcessor = new BypassProcessor(reader, writer, new GzipWorker());
+			var writer = new CompressedChunksWriter(threadingPreferences);
+			var dataProcessor = new CompressChunkProcessor(reader, writer, new GzipWorker());
 			
 			reader.StartRead(parsedArgs.FilePath);
-			// dataProcessor.Start(threadingPreferences.Threads);
-			bypassProcessor.Start(threadingPreferences.Threads);
+			dataProcessor.Start(threadingPreferences.Threads);
 			writer.StartWrite(parsedArgs.OutPath);
+			
+			
+			// var creader = new CompressedChunkReader(threadingPreferences);
+			// var cwriter = new UncompressedChunksWriter(threadingPreferences);
+			// var cdataProcessor = new UncompressChunkProcessor(creader, cwriter, new GzipWorker());
+			//
+			// creader.StartRead(parsedArgs.OutPath);
+			// cdataProcessor.Start(threadingPreferences.Threads);
+			// cwriter.StartWrite(parsedArgs.OutPath+".restored.exe");
 		}
 	}
 }
