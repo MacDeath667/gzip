@@ -7,6 +7,12 @@ namespace GzipRoundRobin.Primitives
 {
 	public class GzipWorker
 	{
+		private AutoThreadingPreferences _settings;
+
+		public GzipWorker(AutoThreadingPreferences settings)
+		{
+			_settings = settings;
+		}
 		public IChunk CompressChunk(IChunk data)
 		{
 			using (var output = new MemoryStream())
@@ -25,16 +31,16 @@ namespace GzipRoundRobin.Primitives
 		
 		public IChunk UncompressChunk(IChunk data)
 		{
-			var destination = new byte[data.Size];
+			var destination = new byte[_settings.BufferBytes];
 			using (var input = new MemoryStream(data.Data))
 			{
-				using (var compressStream = new GZipStream(input, CompressionMode.Decompress))
+				using (var uncompressStream = new GZipStream(input, CompressionMode.Decompress))
 				{
-					compressStream.Read(destination, 0, data.Size);
+					var restoredBytes = uncompressStream.Read(destination, 0, data.Size);
 					return new DataChunk()
 					{
 						Data = destination,
-						Size = (int) input.Length
+						Size = restoredBytes
 					};
 				}
 			}

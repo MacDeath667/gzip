@@ -42,7 +42,7 @@ namespace GzipRoundRobin.Primitives
 		public static readonly int AutoThreadsCount = Math.Min(Environment.ProcessorCount, 4);
 
 		public int Threads { get; }
-		public int BufferBytes { get; }
+		public int BufferBytes { get; set; }
 
 		private sealed class SimpleThreadingPreferences
 		{

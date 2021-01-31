@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.IO;
 using GzipRoundRobin.Implementation.Base;
 using GzipRoundRobin.Primitives;
@@ -9,6 +10,7 @@ namespace GzipRoundRobin.Implementation.Reader
 	{
 		public CompressedChunkReader(AutoThreadingPreferences settings) : base(settings)
 		{
+			_settings = settings;
 		}
 
 		protected override void ReadChunks(string filepath)
@@ -59,7 +61,16 @@ namespace GzipRoundRobin.Implementation.Reader
 			{
 				throw new InvalidChunkContentException("Не удалось прочитать размер буфера");
 			}
-
+			if (bufferSize>_settings.BufferBytes)
+			{
+				Console.WriteLine($"BufferBytes in appsettings.json must be {bufferSize} or more");
+				Environment.Exit(1);
+			}
+			if (bufferSize<_settings.BufferBytes)
+			{
+				Console.WriteLine($"Buffer will be reduced to {bufferSize} bytes");
+				_settings.BufferBytes = bufferSize;
+			}
 			return bufferSize;
 		}
 
@@ -77,5 +88,6 @@ namespace GzipRoundRobin.Implementation.Reader
 		}
 
 		private int _readBytes;
+		private AutoThreadingPreferences _settings;
 	}
 }
