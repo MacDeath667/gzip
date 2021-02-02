@@ -1,8 +1,10 @@
 ﻿namespace GzipRoundRobin.Interface
 {
-	public interface IDataProcessor<Tin, Tout>
+	public interface IDataProcessor
 	{
-		IReader<Tin> Reader { get; set; }
-		IWriter<Tout> Writer { get; set; }
+		IReader Reader { get; set; }
+		IWriter Writer { get; set; }
+
+		void Start(int threadsCount);
 	}
 }

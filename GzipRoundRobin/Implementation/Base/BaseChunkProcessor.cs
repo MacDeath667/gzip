@@ -5,11 +5,11 @@ using GzipRoundRobin.Primitives;
 
 namespace GzipRoundRobin.Implementation.Base
 {
-	public abstract class BaseChunkProcessor : IDataProcessor<IChunk, IChunk>
+	public abstract class BaseChunkProcessor : IDataProcessor
 	{
 		protected BaseChunkProcessor(
-			IReader<IChunk> reader,
-			IWriter<IChunk> writer,
+			IReader reader,
+			IWriter writer,
 			GzipWorker gzipWorker)
 		{
 			Reader = reader;
@@ -17,8 +17,8 @@ namespace GzipRoundRobin.Implementation.Base
 			GzipWorker = gzipWorker;
 		}
 
-		public IReader<IChunk> Reader { get; set; }
-		public IWriter<IChunk> Writer { get; set; }
+		public IReader Reader { get; set; }
+		public IWriter Writer { get; set; }
 		internal GzipWorker GzipWorker { get; }
 
 		private void Dequeue(int processorId)

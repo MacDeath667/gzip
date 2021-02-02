@@ -6,7 +6,7 @@ using GzipRoundRobin.Primitives;
 
 namespace GzipRoundRobin.Implementation.Base
 {
-	public abstract class BaseChunkWriter : IWriter<IChunk>
+	public abstract class BaseChunkWriter : IWriter
 	{
 		protected BaseChunkWriter(AutoThreadingPreferences settings)
 		{

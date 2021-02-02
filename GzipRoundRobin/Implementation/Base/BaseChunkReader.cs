@@ -6,7 +6,7 @@ using GzipRoundRobin.Primitives;
 
 namespace GzipRoundRobin.Implementation.Base
 {
-	public abstract class BaseChunkReader : IReader<IChunk>
+	public abstract class BaseChunkReader : IReader
 	{
 		protected BaseChunkReader(AutoThreadingPreferences settings)
 		{

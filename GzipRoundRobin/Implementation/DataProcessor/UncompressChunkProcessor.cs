@@ -7,8 +7,8 @@ namespace GzipRoundRobin.Implementation.DataProcessor
 	public class UncompressChunkProcessor : BaseChunkProcessor
 	{
 		public UncompressChunkProcessor(
-			IReader<IChunk> reader,
-			IWriter<IChunk> writer,
+			IReader reader,
+			IWriter writer,
 			GzipWorker gzipWorker) : base(
 			reader,
 			writer,
