@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Configuration;
 using System.IO;
 using GzipRoundRobin.Implementation.Base;
 using GzipRoundRobin.Primitives;

@@ -6,9 +6,9 @@ using GzipRoundRobin.Primitives;
 
 namespace GzipRoundRobin.Fabric
 {
-	class DecompressedProcessorChain : ProcessorChain
+	class DecompressedProcessChain : ProcessChain, IProcessChain
 	{
-		public DecompressedProcessorChain(
+		public DecompressedProcessChain(
 			CliParserResult cliArguments,
 			AutoThreadingPreferences threadingPreferences)
 			: base(cliArguments,
@@ -19,6 +19,6 @@ namespace GzipRoundRobin.Fabric
 			Processor = new UncompressChunkProcessor(Reader, Writer, new GzipWorker(threadingPreferences));
 		}
 
-		public sealed override IDataProcessor Processor { get; set; }
+		protected sealed override IDataProcessor Processor { get; }
 	}
 }

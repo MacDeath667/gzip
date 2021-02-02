@@ -1,4 +1,5 @@
 ﻿using System;
+using GzipRoundRobin.Interface;
 using GzipRoundRobin.Primitives;
 
 namespace GzipRoundRobin.Fabric
@@ -16,7 +17,7 @@ namespace GzipRoundRobin.Fabric
 			_threadingPreferences = threadingPreferences;
 		}
 
-		public IProcessorChain MakeProcessorChain()
+		public IProcessChain MakeProcessChain()
 		{
 			switch (_cliArguments.GzipActionType)
 			{
@@ -32,14 +33,14 @@ namespace GzipRoundRobin.Fabric
 			return default;
 		}
 
-		private IProcessorChain MakeDecompressChain()
+		private IProcessChain MakeDecompressChain()
 		{
-			return new DecompressedProcessorChain(_cliArguments, _threadingPreferences);
+			return new DecompressedProcessChain(_cliArguments, _threadingPreferences);
 		}
 
-		private IProcessorChain MakeCompressChain()
+		private IProcessChain MakeCompressChain()
 		{
-			return new CompressedProcessorChain(_cliArguments, _threadingPreferences);
+			return new CompressedProcessChain(_cliArguments, _threadingPreferences);
 		}
 	}
 }

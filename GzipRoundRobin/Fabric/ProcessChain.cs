@@ -3,18 +3,19 @@ using GzipRoundRobin.Primitives;
 
 namespace GzipRoundRobin.Fabric
 {
-	abstract class ProcessorChain : IProcessorChain
+	abstract class ProcessChain : IProcessChain
 	{
-		protected ProcessorChain(CliParserResult cliArguments,
+		protected ProcessChain(
+			CliParserResult cliArguments,
 			AutoThreadingPreferences threadingPreferences)
 		{
 			_cliArguments = cliArguments;
 			_threadingPreferences = threadingPreferences;
 		}
 
-		public IReader Reader { get; set; }
-		public IWriter Writer { get; set; }
-		public abstract IDataProcessor Processor { get; set; }
+		protected IReader Reader { get; set; }
+		protected IWriter Writer { get; set; }
+		protected abstract IDataProcessor Processor { get; }
 
 		public void StartProcessing()
 		{
