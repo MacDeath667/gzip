@@ -19,8 +19,8 @@ namespace GzipRoundRobin.Implementation.Base
 		}
 
 
-		public CountdownEvent Reset { get; set; }
-		public BlockingQueue<IChunk>[] Queues { get; set; }
+		public CountdownEvent Reset { get; }
+		public BlockingQueue<IChunk>[] Queues { get; }
 
 		public abstract void Start(string filepath);
 

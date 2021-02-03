@@ -31,7 +31,7 @@ namespace GzipRoundRobin.Implementation.Reader
 					}
 
 					var index = i % Queues.Length;
-					Console.WriteLine($"compressed chunk: {i}, size: {_readBytes}");
+					Console.WriteLine($"Compressed chunk: {i}, size: {_readBytes}");
 					Queues[index].Enqueue(CreateChunk(buffer.Clone() as byte[], _readBytes));
 					++i;
 				}
@@ -58,11 +58,11 @@ namespace GzipRoundRobin.Implementation.Reader
 			var bufferSize = ReadIntFromFilestream(fileStream);
 			if (bufferSize < 0)
 			{
-				throw new InvalidChunkContentException("Не удалось прочитать размер буфера");
+				throw new InvalidChunkContentException("Can't get size of buffer from file");
 			}
 			if (bufferSize>_settings.BufferBytes)
 			{
-				Console.WriteLine($"BufferBytes in appsettings.json must be {bufferSize} or more");
+				ExitHelper.ExitWithCode($"BufferBytes in appsettings.json must be {bufferSize} or more",1);
 				Environment.Exit(1);
 			}
 			if (bufferSize<_settings.BufferBytes)

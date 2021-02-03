@@ -19,9 +19,9 @@ namespace GzipRoundRobin.Implementation.Base
 			StartWork = new ManualResetEventSlim(false);
 		}
 
-		public ManualResetEventSlim Reset { get; set; }
-		public ManualResetEventSlim StartWork { get; set; }
-		public BlockingQueue<IChunk>[] Queues { get; set; }
+		public ManualResetEventSlim Reset { get; }
+		public ManualResetEventSlim StartWork { get; }
+		public BlockingQueue<IChunk>[] Queues { get; }
 
 		public void Start(string filepath)
 		{

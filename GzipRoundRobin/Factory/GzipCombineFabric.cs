@@ -28,8 +28,8 @@ namespace GzipRoundRobin.Factory
 					return MakeDecompressChain();
 			}
 
-			Console.WriteLine("Unknown Gzip action type. Check");
-			Environment.Exit(1);
+			Console.WriteLine("Unknown Gzip action type. Check it");
+			ExitHelper.ExitWithCode(1);
 			return default;
 		}
 

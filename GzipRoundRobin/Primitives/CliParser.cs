@@ -4,14 +4,16 @@ namespace GzipRoundRobin.Primitives
 {
 	internal class CliParser
 	{
-		public CliParserResult CliParse(string[] args)
+		public bool TryCliParse(out CliParserResult parseResult, string[] args)
 		{
+			var result = new CliParserResult();
 			if (args.Length != 3)
 			{
-				throw new ArgumentException("Bad CLI args count");
+				Console.WriteLine("Count of arguments must be equal 3. Actual format: [compress/decompress] [input filepath] [output filepath]");
+				parseResult = result;
+				return false;
 			}
-
-			var result = new CliParserResult();
+			
 			var currentArg = args[0];
 
 			switch (currentArg.ToLower())
@@ -32,7 +34,9 @@ namespace GzipRoundRobin.Primitives
 
 			currentArg = args[2];
 			result.OutPath = currentArg;
-			return result;
+			
+			parseResult = result;
+			return true;
 		}
 	}
 }

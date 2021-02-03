@@ -5,8 +5,8 @@ namespace GzipRoundRobin.Abstractions
 {
 	internal interface IWriter
 	{
-		CountdownEvent Reset { get; set; }
-		BlockingQueue<IChunk>[] Queues { get; set; }
+		CountdownEvent Reset { get; }
+		BlockingQueue<IChunk>[] Queues { get; }
 		void Start(string filepath);
 	}
 }

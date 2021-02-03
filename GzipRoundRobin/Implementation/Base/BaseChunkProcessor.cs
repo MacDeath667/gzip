@@ -17,8 +17,8 @@ namespace GzipRoundRobin.Implementation.Base
 			GzipWorker = gzipWorker;
 		}
 
-		public IReader Reader { get; set; }
-		public IWriter Writer { get; set; }
+		private IReader Reader { get; }
+		private IWriter Writer { get; }
 		internal GzipWorker GzipWorker { get; }
 
 		private void Dequeue(int processorId)

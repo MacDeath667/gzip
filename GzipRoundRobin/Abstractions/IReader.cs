@@ -5,9 +5,9 @@ namespace GzipRoundRobin.Abstractions
 {
 	internal interface IReader
 	{
-		ManualResetEventSlim Reset { get; set; }
-		ManualResetEventSlim StartWork { get; set; }
-		BlockingQueue<IChunk>[] Queues { get; set; }
+		ManualResetEventSlim Reset { get; }
+		ManualResetEventSlim StartWork { get; }
+		BlockingQueue<IChunk>[] Queues { get; }
 		void Start(string filepath);
 	}
 }
