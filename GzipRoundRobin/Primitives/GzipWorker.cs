@@ -8,8 +8,6 @@ namespace GzipRoundRobin.Primitives
 {
 	internal class GzipWorker
 	{
-		private readonly AutoThreadingPreferences _settings;
-
 		internal GzipWorker(AutoThreadingPreferences settings)
 		{
 			_settings = settings;
@@ -51,5 +49,7 @@ namespace GzipRoundRobin.Primitives
 				Size = restoredBytes
 			};
 		}
+
+		private readonly AutoThreadingPreferences _settings;
 	}
 }

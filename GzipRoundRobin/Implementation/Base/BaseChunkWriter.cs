@@ -18,11 +18,8 @@ namespace GzipRoundRobin.Implementation.Base
 			}
 		}
 
-
-		public CountdownEvent Reset { get; }
-		public BlockingQueue<IChunk>[] Queues { get; }
-
 		public abstract void Start(string filepath);
+		protected abstract void WriteChunk(BinaryWriter binaryWriter, IChunk chunk);
 
 		private protected void Write(BinaryWriter binaryWriter)
 		{
@@ -47,6 +44,8 @@ namespace GzipRoundRobin.Implementation.Base
 			}
 		}
 
-		protected abstract void WriteChunk(BinaryWriter binaryWriter, IChunk chunk);
+
+		public CountdownEvent Reset { get; }
+		public BlockingQueue<IChunk>[] Queues { get; }
 	}
 }

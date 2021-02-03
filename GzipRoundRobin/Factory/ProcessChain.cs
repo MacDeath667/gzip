@@ -13,10 +13,6 @@ namespace GzipRoundRobin.Factory
 			_threadingPreferences = threadingPreferences;
 		}
 
-		protected IReader Reader { get; set; }
-		protected IWriter Writer { get; set; }
-		protected abstract IDataProcessor Processor { get; }
-
 		public void StartProcessing()
 		{
 			Reader.Start(_cliArguments.FilePath);
@@ -24,7 +20,10 @@ namespace GzipRoundRobin.Factory
 			Writer.Start(_cliArguments.OutPath);
 		}
 
-
+		protected IReader Reader { get; set; }
+		protected IWriter Writer { get; set; }
+		protected abstract IDataProcessor Processor { get; }
+		
 		private readonly CliParserResult _cliArguments;
 		private readonly AutoThreadingPreferences _threadingPreferences;
 	}

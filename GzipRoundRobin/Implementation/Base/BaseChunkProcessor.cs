@@ -17,9 +17,18 @@ namespace GzipRoundRobin.Implementation.Base
 			GzipWorker = gzipWorker;
 		}
 
-		private IReader Reader { get; }
-		private IWriter Writer { get; }
-		internal GzipWorker GzipWorker { get; }
+		public void Start(int threadsCount)
+		{
+			Console.WriteLine($"Processing start in {threadsCount} threads");
+
+			for (int i = 0; i < threadsCount; i++)
+			{
+				var tmp = i;
+				new Thread(() => Dequeue(tmp)).Start();
+			}
+		}
+
+		protected abstract IChunk ProcessChunkData(IChunk chunk);
 
 		private void Dequeue(int processorId)
 		{
@@ -28,8 +37,6 @@ namespace GzipRoundRobin.Implementation.Base
 			var outputQueue = Writer.Queues[processorId];
 
 			Reader.StartWork.Wait();
-			
-			Console.WriteLine("waited");
 
 			while (Reader.Reset.IsSet || !inputQueue.IsEmpty)
 			{
@@ -48,18 +55,9 @@ namespace GzipRoundRobin.Implementation.Base
 			Console.WriteLine($"Data processor: {processorId} finished.");
 		}
 
-		protected abstract IChunk ProcessChunkData(IChunk chunk);
 
-		public void Start(int threadsCount)
-		{
-			Console.WriteLine($"Processing start in {threadsCount} threads");
-			
-			for (int i = 0; i < threadsCount; i++)
-			{
-				var tmp = i;
-				new Thread(() => Dequeue(tmp)).Start();
-			}
-		
-		}
+		private IReader Reader { get; }
+		private IWriter Writer { get; }
+		internal GzipWorker GzipWorker { get; }
 	}
 }

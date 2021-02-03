@@ -87,6 +87,6 @@ namespace GzipRoundRobin.Implementation.Reader
 		}
 
 		private int _readBytes;
-		private AutoThreadingPreferences _settings;
+		private readonly AutoThreadingPreferences _settings;
 	}
 }

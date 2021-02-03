@@ -4,7 +4,7 @@ namespace GzipRoundRobin.Primitives
 {
 	internal class CliParser
 	{
-		public bool TryCliParse(out CliParserResult parseResult, string[] args)
+		public static bool TryParse(out CliParserResult parseResult, string[] args)
 		{
 			var result = new CliParserResult();
 			if (args.Length != 3)

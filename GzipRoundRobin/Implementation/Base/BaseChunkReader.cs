@@ -18,10 +18,7 @@ namespace GzipRoundRobin.Implementation.Base
 			Reset = new ManualResetEventSlim(false);
 			StartWork = new ManualResetEventSlim(false);
 		}
-
-		public ManualResetEventSlim Reset { get; }
-		public ManualResetEventSlim StartWork { get; }
-		public BlockingQueue<IChunk>[] Queues { get; }
+		
 
 		public void Start(string filepath)
 		{
@@ -31,7 +28,6 @@ namespace GzipRoundRobin.Implementation.Base
 
 		private protected abstract void ReadChunks(string filepath);
 		
-
 		private protected DataChunk CreateChunk(byte[] buffer, int readBytes)
 		{
 			return new DataChunk()
@@ -40,5 +36,8 @@ namespace GzipRoundRobin.Implementation.Base
 				Size = readBytes
 			};
 		}
+		public ManualResetEventSlim Reset { get; }
+		public ManualResetEventSlim StartWork { get; }
+		public BlockingQueue<IChunk>[] Queues { get; }
 	}
 }

@@ -8,7 +8,7 @@ namespace GzipRoundRobin
 	{
 		static void Main(string[] args)
 		{
-			if (!new CliParser().TryCliParse(out var parsedArgs, args) 
+			if (!CliParser.TryParse(out var parsedArgs, args) 
 			    || !parsedArgs.Validate())
 			{
 				ExitHelper.ExitWithCode(1);
