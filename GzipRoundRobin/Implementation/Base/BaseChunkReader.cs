@@ -6,21 +6,22 @@ using GzipRoundRobin.Primitives;
 
 namespace GzipRoundRobin.Implementation.Base
 {
-	public abstract class BaseChunkReader : IReader
+	internal abstract class BaseChunkReader : IReader
 	{
 		protected BaseChunkReader(AutoThreadingPreferences settings)
 		{
-			Queues = new MultithreadingQueue<IChunk>[settings.Threads];
+			Queues = new BlockingQueue<IChunk>[settings.Threads];
 			for (int i = 0; i < Queues.Length; i++)
 			{
-				Queues[i] = new MultithreadingQueue<IChunk>(settings.Threads); //todo limit by ram
+				Queues[i] = new BlockingQueue<IChunk>(settings.Threads);
 			}
 			Reset = new ManualResetEventSlim(false);
 			StartWork = new ManualResetEventSlim(false);
 		}
+
 		public ManualResetEventSlim Reset { get; set; }
 		public ManualResetEventSlim StartWork { get; set; }
-		public MultithreadingQueue<IChunk>[] Queues { get; set; }
+		public BlockingQueue<IChunk>[] Queues { get; set; }
 
 		public void Start(string filepath)
 		{
@@ -28,10 +29,10 @@ namespace GzipRoundRobin.Implementation.Base
 			new Thread(() => ReadChunks(filepath)).Start();
 		}
 
-		protected abstract void ReadChunks(string filepath);
+		private protected abstract void ReadChunks(string filepath);
 		
 
-		protected DataChunk CreateChunk(byte[] buffer, int readBytes)
+		private protected DataChunk CreateChunk(byte[] buffer, int readBytes)
 		{
 			return new DataChunk()
 			{

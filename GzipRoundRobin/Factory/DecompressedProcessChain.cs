@@ -8,7 +8,7 @@ namespace GzipRoundRobin.Factory
 {
 	class DecompressedProcessChain : ProcessChain
 	{
-		public DecompressedProcessChain(
+		internal DecompressedProcessChain(
 			CliParserResult cliArguments,
 			AutoThreadingPreferences threadingPreferences)
 			: base(cliArguments,

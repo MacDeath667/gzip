@@ -1,6 +1,6 @@
 ﻿namespace GzipRoundRobin.Abstractions
 {
-	public interface IProcessChain
+	internal interface IProcessChain
 	{
 		void StartProcessing();
 	}

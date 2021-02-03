@@ -6,9 +6,9 @@ using GzipRoundRobin.Primitives;
 
 namespace GzipRoundRobin.Implementation.Writer
 {
-	public class UncompressedChunksWriter : BaseChunkWriter
+	internal class UncompressedChunksWriter : BaseChunkWriter
 	{
-		public UncompressedChunksWriter(AutoThreadingPreferences settings) : base(settings)
+		internal UncompressedChunksWriter(AutoThreadingPreferences settings) : base(settings)
 		{
 		}
 

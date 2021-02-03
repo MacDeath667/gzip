@@ -3,10 +3,10 @@ using GzipRoundRobin.Primitives;
 
 namespace GzipRoundRobin.Abstractions
 {
-	public interface IWriter
+	internal interface IWriter
 	{
 		CountdownEvent Reset { get; set; }
-		MultithreadingQueue<IChunk>[] Queues { get; set; }
+		BlockingQueue<IChunk>[] Queues { get; set; }
 		void Start(string filepath);
 	}
 }

@@ -1,9 +1,9 @@
 ﻿namespace GzipRoundRobin.Primitives
 {
-	public class CliParserResult
+	internal class CliParserResult
 	{
-		public GzipActionType GzipActionType { get; set; }
-		public string FilePath { get; set; }
-		public string OutPath { get; set; }
+		internal GzipActionType GzipActionType { get; set; }
+		internal string FilePath { get; set; }
+		internal string OutPath { get; set; }
 	}
 }

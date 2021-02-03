@@ -4,12 +4,12 @@ using GzipRoundRobin.Primitives;
 
 namespace GzipRoundRobin.Factory
 {
-	public class GzipCombineFabric
+	internal class GzipCombineFabric
 	{
 		private readonly CliParserResult _cliArguments;
 		private readonly AutoThreadingPreferences _threadingPreferences;
 
-		public GzipCombineFabric(
+		internal GzipCombineFabric(
 			CliParserResult cliArguments,
 			AutoThreadingPreferences threadingPreferences)
 		{
@@ -17,7 +17,7 @@ namespace GzipRoundRobin.Factory
 			_threadingPreferences = threadingPreferences;
 		}
 
-		public IProcessChain MakeProcessChain()
+		internal IProcessChain MakeProcessChain()
 		{
 			switch (_cliArguments.GzipActionType)
 			{

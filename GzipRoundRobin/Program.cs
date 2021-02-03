@@ -2,6 +2,7 @@
 using GzipRoundRobin.Factory;
 using GzipRoundRobin.Primitives;
 using GzipRoundRobin.Validators;
+using NLog;
 
 namespace GzipRoundRobin
 {

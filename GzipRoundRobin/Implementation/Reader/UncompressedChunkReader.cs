@@ -5,14 +5,14 @@ using GzipRoundRobin.Primitives;
 
 namespace GzipRoundRobin.Implementation.Reader
 {
-	public class UncompressedChunkReader : BaseChunkReader
+	internal class UncompressedChunkReader : BaseChunkReader
 	{
-		public UncompressedChunkReader(AutoThreadingPreferences settings) : base(settings)
+		internal UncompressedChunkReader(AutoThreadingPreferences settings) : base(settings)
 		{
 			_buffer = new byte[settings.BufferBytes];
 		}
 
-		protected override void ReadChunks(string filepath)
+		private protected override void ReadChunks(string filepath)
 		{
 			using (var filestream = File.Open(filepath, FileMode.Open))
 			{

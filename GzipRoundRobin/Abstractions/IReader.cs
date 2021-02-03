@@ -3,11 +3,11 @@ using GzipRoundRobin.Primitives;
 
 namespace GzipRoundRobin.Abstractions
 {
-	public interface IReader
+	internal interface IReader
 	{
 		ManualResetEventSlim Reset { get; set; }
 		ManualResetEventSlim StartWork { get; set; }
-		MultithreadingQueue<IChunk>[] Queues { get; set; }
+		BlockingQueue<IChunk>[] Queues { get; set; }
 		void Start(string filepath);
 	}
 }

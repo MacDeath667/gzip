@@ -6,16 +6,16 @@ using GzipRoundRobin.Implementation.Chunks;
 
 namespace GzipRoundRobin.Primitives
 {
-	public class GzipWorker
+	internal class GzipWorker
 	{
-		private AutoThreadingPreferences _settings;
+		private readonly AutoThreadingPreferences _settings;
 
-		public GzipWorker(AutoThreadingPreferences settings)
+		internal GzipWorker(AutoThreadingPreferences settings)
 		{
 			_settings = settings;
 		}
 
-		public IChunk CompressChunk(IChunk data)
+		internal IChunk CompressChunk(IChunk data)
 		{
 			MemoryStream output;
 			using (output = new MemoryStream())
@@ -33,7 +33,7 @@ namespace GzipRoundRobin.Primitives
 			}
 		}
 
-		public IChunk UncompressChunk(IChunk data)
+		internal IChunk UncompressChunk(IChunk data)
 		{
 			var destination = new byte[_settings.BufferBytes];
 			int restoredBytes;

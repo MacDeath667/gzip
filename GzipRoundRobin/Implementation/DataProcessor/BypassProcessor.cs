@@ -4,9 +4,9 @@ using GzipRoundRobin.Primitives;
 
 namespace GzipRoundRobin.Implementation.DataProcessor
 {
-	public class BypassProcessor : BaseChunkProcessor
+	internal class BypassProcessor : BaseChunkProcessor
 	{
-		public BypassProcessor(
+		private BypassProcessor(
 			IReader reader,
 			IWriter writer,
 			GzipWorker gzipWorker) : base(

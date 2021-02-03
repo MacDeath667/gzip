@@ -4,9 +4,9 @@ using GzipRoundRobin.Primitives;
 
 namespace GzipRoundRobin.Validators
 {
-	public static class ArgumentsValidateHelper
+	internal static class ArgumentsValidateHelper
 	{
-		public static bool IsInputFileExists(string filepath)
+		internal static bool IsInputFileExists(string filepath)
 		{
 			var fileInfo = new FileInfo(filepath);
 			Console.WriteLine(fileInfo.Exists
@@ -15,7 +15,7 @@ namespace GzipRoundRobin.Validators
 			return fileInfo.Exists;
 		}
 
-		public static bool IsValidOutpath(string filepath)
+		internal static bool IsValidOutpath(string filepath)
 		{
 			try
 			{
@@ -33,7 +33,7 @@ namespace GzipRoundRobin.Validators
 			}
 		}
 
-		public static bool IsValidGzipActionType(GzipActionType parsedArgsGzipActionType)
+		internal static bool IsValidGzipActionType(GzipActionType parsedArgsGzipActionType)
 		{
 			var isValidType = parsedArgsGzipActionType != GzipActionType.Unknown;
 			Console.WriteLine(isValidType

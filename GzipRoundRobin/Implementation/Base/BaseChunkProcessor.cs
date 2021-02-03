@@ -5,7 +5,7 @@ using GzipRoundRobin.Primitives;
 
 namespace GzipRoundRobin.Implementation.Base
 {
-	public abstract class BaseChunkProcessor : IDataProcessor
+	internal abstract class BaseChunkProcessor : IDataProcessor
 	{
 		protected BaseChunkProcessor(
 			IReader reader,

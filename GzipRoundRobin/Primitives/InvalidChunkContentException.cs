@@ -2,9 +2,9 @@
 
 namespace GzipRoundRobin.Primitives
 {
-	public class InvalidChunkContentException : Exception
+	internal class InvalidChunkContentException : Exception
 	{
-		public InvalidChunkContentException(string errorMessage) : base(errorMessage)
+		internal InvalidChunkContentException(string errorMessage) : base(errorMessage)
 		{
 		}
 	}

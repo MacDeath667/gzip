@@ -4,9 +4,9 @@ using GzipRoundRobin.Primitives;
 
 namespace GzipRoundRobin.Implementation.DataProcessor
 {
-	public class UncompressChunkProcessor : BaseChunkProcessor
+	internal class UncompressChunkProcessor : BaseChunkProcessor
 	{
-		public UncompressChunkProcessor(
+		internal UncompressChunkProcessor(
 			IReader reader,
 			IWriter writer,
 			GzipWorker gzipWorker) : base(

@@ -1,6 +1,6 @@
 ﻿namespace GzipRoundRobin.Abstractions
 {
-	public interface IDataProcessor
+	internal interface IDataProcessor
 	{
 		IReader Reader { get; set; }
 		IWriter Writer { get; set; }

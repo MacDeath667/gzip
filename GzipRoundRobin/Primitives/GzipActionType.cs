@@ -1,6 +1,6 @@
 ﻿namespace GzipRoundRobin.Primitives
 {
-	public enum GzipActionType
+	internal enum GzipActionType
 	{
 		Compress,
 		Decompress,

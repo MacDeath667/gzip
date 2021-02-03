@@ -3,14 +3,14 @@ using Microsoft.Extensions.Configuration;
 
 namespace GzipRoundRobin.Primitives
 {
-	public class AutoThreadingPreferences
+	internal class AutoThreadingPreferences
 	{
-		public static AutoThreadingPreferences Create()
+		internal static AutoThreadingPreferences Create()
 		{
 			return new AutoThreadingPreferences();
 		}
 		
-		public AutoThreadingPreferences()
+		private AutoThreadingPreferences()
 		{
 			SimpleThreadingPreferences preferences = default;
 			try
@@ -37,17 +37,17 @@ namespace GzipRoundRobin.Primitives
 				: preferences.BufferBytes.Value;
 		}
 
-		public const int AutoBufferBytes = 2 * 1024 * 1024; // todo: set it by available RAM size
+		private const int AutoBufferBytes = 2 * 1024 * 1024; // todo: set it by available RAM size
 
-		public static readonly int AutoThreadsCount = Math.Min(Environment.ProcessorCount, 4);
+		private static readonly int AutoThreadsCount = Math.Min(Environment.ProcessorCount, 4);
 
-		public int Threads { get; }
-		public int BufferBytes { get; set; }
+		internal int Threads { get; }
+		internal int BufferBytes { get; set; }
 
 		private sealed class SimpleThreadingPreferences
 		{
-			public int? Threads { get; set; }
-			public int? BufferBytes { get; set; }
+			internal int? Threads { get; set; }
+			internal int? BufferBytes { get; set; }
 		}
 	}
 }

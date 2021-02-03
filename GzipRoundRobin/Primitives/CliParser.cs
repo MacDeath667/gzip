@@ -2,7 +2,7 @@
 
 namespace GzipRoundRobin.Primitives
 {
-	public class CliParser
+	internal class CliParser
 	{
 		public CliParserResult CliParse(string[] args)
 		{

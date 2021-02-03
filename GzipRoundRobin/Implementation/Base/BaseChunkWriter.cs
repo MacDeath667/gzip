@@ -6,25 +6,25 @@ using GzipRoundRobin.Primitives;
 
 namespace GzipRoundRobin.Implementation.Base
 {
-	public abstract class BaseChunkWriter : IWriter
+	internal abstract class BaseChunkWriter : IWriter
 	{
 		protected BaseChunkWriter(AutoThreadingPreferences settings)
 		{
 			Reset = new CountdownEvent(settings.Threads);
-			Queues = new MultithreadingQueue<IChunk>[settings.Threads];
+			Queues = new BlockingQueue<IChunk>[settings.Threads];
 			for (int i = 0; i < Queues.Length; i++)
 			{
-				Queues[i] = new MultithreadingQueue<IChunk>(settings.Threads);
+				Queues[i] = new BlockingQueue<IChunk>(settings.Threads);
 			}
 		}
 
 
 		public CountdownEvent Reset { get; set; }
-		public MultithreadingQueue<IChunk>[] Queues { get; set; }
-		
+		public BlockingQueue<IChunk>[] Queues { get; set; }
+
 		public abstract void Start(string filepath);
 
-		protected void Write(BinaryWriter binaryWriter)
+		private protected void Write(BinaryWriter binaryWriter)
 		{
 			while (true)
 			{

@@ -2,7 +2,7 @@
 
 namespace GzipRoundRobin.Implementation.Chunks
 {
-	public class DataChunk : IChunk
+	internal class DataChunk : IChunk
 	{
 		public int Size { get; set; }
 		public byte[] Data { get; set; }

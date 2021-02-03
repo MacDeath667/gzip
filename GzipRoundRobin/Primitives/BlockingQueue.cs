@@ -3,12 +3,12 @@ using System.Threading;
 
 namespace GzipRoundRobin.Primitives
 {
-	public class MultithreadingQueue<T>
+	internal class BlockingQueue<T>
 	{
 		private readonly Queue<T> _baseQueue;
 		private readonly int _queueLimit;
 
-		public MultithreadingQueue(int queueLimit)
+		internal BlockingQueue(int queueLimit)
 		{
 			_baseQueue = new Queue<T>();
 			_queueLimit = queueLimit;
@@ -18,7 +18,7 @@ namespace GzipRoundRobin.Primitives
 			_baseQueue.Count == 0;
 
 
-		public void Enqueue(T data)
+		internal void Enqueue(T data)
 		{
 			lock (_baseQueue)
 			{
@@ -35,7 +35,7 @@ namespace GzipRoundRobin.Primitives
 			}
 		}
 
-		public bool TryDequeue(out T data)
+		internal bool TryDequeue(out T data)
 		{
 			try
 			{
