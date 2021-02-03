@@ -1,7 +1,7 @@
 ﻿using System.Threading;
 using GzipRoundRobin.Primitives;
 
-namespace GzipRoundRobin.Interface
+namespace GzipRoundRobin.Abstractions
 {
 	public interface IReader
 	{

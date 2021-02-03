@@ -1,7 +1,7 @@
-﻿using GzipRoundRobin.Implementation.DataProcessor;
+﻿using GzipRoundRobin.Abstractions;
+using GzipRoundRobin.Implementation.DataProcessor;
 using GzipRoundRobin.Implementation.Reader;
 using GzipRoundRobin.Implementation.Writer;
-using GzipRoundRobin.Interface;
 using GzipRoundRobin.Primitives;
 
 namespace GzipRoundRobin.Fabric

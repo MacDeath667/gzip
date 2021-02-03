@@ -1,8 +1,8 @@
 ﻿using System;
 using System.IO;
 using System.IO.Compression;
+using GzipRoundRobin.Abstractions;
 using GzipRoundRobin.Implementation.Chunks;
-using GzipRoundRobin.Interface;
 
 namespace GzipRoundRobin.Primitives
 {

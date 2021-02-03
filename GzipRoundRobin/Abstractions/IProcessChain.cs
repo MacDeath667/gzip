@@ -1,4 +1,4 @@
-﻿namespace GzipRoundRobin.Interface
+﻿namespace GzipRoundRobin.Abstractions
 {
 	public interface IProcessChain
 	{

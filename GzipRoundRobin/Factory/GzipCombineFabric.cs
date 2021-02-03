@@ -1,5 +1,5 @@
 ﻿using System;
-using GzipRoundRobin.Interface;
+using GzipRoundRobin.Abstractions;
 using GzipRoundRobin.Primitives;
 
 namespace GzipRoundRobin.Fabric

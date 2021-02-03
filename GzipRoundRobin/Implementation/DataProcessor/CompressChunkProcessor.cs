@@ -1,5 +1,5 @@
-﻿using GzipRoundRobin.Implementation.Base;
-using GzipRoundRobin.Interface;
+﻿using GzipRoundRobin.Abstractions;
+using GzipRoundRobin.Implementation.Base;
 using GzipRoundRobin.Primitives;
 
 namespace GzipRoundRobin.Implementation.DataProcessor

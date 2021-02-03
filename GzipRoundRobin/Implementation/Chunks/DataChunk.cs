@@ -1,4 +1,4 @@
-﻿using GzipRoundRobin.Interface;
+﻿using GzipRoundRobin.Abstractions;
 
 namespace GzipRoundRobin.Implementation.Chunks
 {

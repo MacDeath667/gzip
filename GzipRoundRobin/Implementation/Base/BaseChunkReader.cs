@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
+using GzipRoundRobin.Abstractions;
 using GzipRoundRobin.Implementation.Chunks;
-using GzipRoundRobin.Interface;
 using GzipRoundRobin.Primitives;
 
 namespace GzipRoundRobin.Implementation.Base

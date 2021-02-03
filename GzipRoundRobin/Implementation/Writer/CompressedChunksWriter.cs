@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
+using GzipRoundRobin.Abstractions;
 using GzipRoundRobin.Implementation.Base;
-using GzipRoundRobin.Interface;
 using GzipRoundRobin.Primitives;
 
 namespace GzipRoundRobin.Implementation.Writer
