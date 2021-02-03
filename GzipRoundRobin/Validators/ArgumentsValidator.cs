@@ -20,11 +20,20 @@ namespace GzipRoundRobin.Validators
 				Console.WriteLine("Input filepath was null or unsupported format. Check arguments");
 				return false;
 			}
-			var fileInfo = new FileInfo(filepath);
-			Console.WriteLine(fileInfo.Exists
+
+			FileInfo fileInfo = default;
+			try
+			{
+				fileInfo= new FileInfo(filepath);
+			}
+			catch (Exception e)
+			{
+				ExitHelper.ExitWithCode($"Input file can't be found by reason: {e.Message}", 1);
+			}
+			Console.WriteLine(fileInfo != null && fileInfo.Exists
 				? $"Found file with size {fileInfo.Length}"
 				: $"File not found on the filepath: {filepath}. Check input filepath an arguments");
-			return fileInfo.Exists;
+			return fileInfo != null && fileInfo.Exists;
 		}
 
 		private static bool IsValidOutpath(string filepath)
