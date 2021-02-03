@@ -1,7 +1,7 @@
 ﻿using GzipRoundRobin.Abstractions;
 using GzipRoundRobin.Primitives;
 
-namespace GzipRoundRobin.Fabric
+namespace GzipRoundRobin.Factory
 {
 	abstract class ProcessChain : IProcessChain
 	{

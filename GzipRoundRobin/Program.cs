@@ -1,5 +1,5 @@
 ﻿using System;
-using GzipRoundRobin.Fabric;
+using GzipRoundRobin.Factory;
 using GzipRoundRobin.Primitives;
 using GzipRoundRobin.Validators;
 

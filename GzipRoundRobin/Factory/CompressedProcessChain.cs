@@ -4,7 +4,7 @@ using GzipRoundRobin.Implementation.Reader;
 using GzipRoundRobin.Implementation.Writer;
 using GzipRoundRobin.Primitives;
 
-namespace GzipRoundRobin.Fabric
+namespace GzipRoundRobin.Factory
 {
 	class CompressedProcessChain : ProcessChain
 	{
