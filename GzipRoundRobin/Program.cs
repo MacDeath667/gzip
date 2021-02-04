@@ -16,6 +16,7 @@ namespace GzipRoundRobin
 			if (!CliParser.TryParse(out var parsedArgs, args)
 			    || !parsedArgs.Validate())
 			{
+				Log.Error("One or more arguments are invalid");
 				ExitHelper.ExitWithCode(1);
 			}
 
@@ -25,6 +26,7 @@ namespace GzipRoundRobin
 				.MakeProcessChain()
 				.StartProcessing();
 
+			Log.Information("App finish");
 			ExitHelper.ExitWithCode(0);
 		}
 
