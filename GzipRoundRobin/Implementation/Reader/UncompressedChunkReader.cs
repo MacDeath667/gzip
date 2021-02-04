@@ -2,6 +2,7 @@
 using System.IO;
 using GzipRoundRobin.Implementation.Base;
 using GzipRoundRobin.Primitives;
+using Serilog;
 
 namespace GzipRoundRobin.Implementation.Reader
 {
@@ -24,12 +25,12 @@ namespace GzipRoundRobin.Implementation.Reader
 				{
 					var index = i % Queues.Length;
 					Queues[index].Enqueue(CreateChunk(_buffer.Clone() as byte[], readBytes));
-					Console.WriteLine($"reader: {readBytes}");
+					Log.Debug($"reader: {readBytes}");
 					++i;
 				}
 			}
 			
-			Console.WriteLine("File end");
+			Log.Information("File end");
 			Reset.Reset();
 		}
 

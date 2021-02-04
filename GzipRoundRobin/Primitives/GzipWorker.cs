@@ -3,6 +3,7 @@ using System.IO;
 using System.IO.Compression;
 using GzipRoundRobin.Abstractions;
 using GzipRoundRobin.Implementation.Chunks;
+using Serilog;
 
 namespace GzipRoundRobin.Primitives
 {
@@ -40,7 +41,7 @@ namespace GzipRoundRobin.Primitives
 			using (var uncompressStream = new GZipStream(input, CompressionMode.Decompress))
 			{
 				restoredBytes = uncompressStream.Read(destination, 0, destination.Length);
-				Console.WriteLine(restoredBytes);
+				Log.Debug($"Restored chunk with size: {restoredBytes} bytes");
 			}
 
 			return new DataChunk()

@@ -3,6 +3,7 @@ using System.IO;
 using GzipRoundRobin.Abstractions;
 using GzipRoundRobin.Implementation.Base;
 using GzipRoundRobin.Primitives;
+using Serilog;
 
 namespace GzipRoundRobin.Implementation.Writer
 {
@@ -25,7 +26,7 @@ namespace GzipRoundRobin.Implementation.Writer
 
 		protected override void WriteChunk(BinaryWriter binaryWriter, IChunk chunk)
 		{
-			Console.WriteLine($"Compressed writer: {chunk.Size}");
+			Log.Debug($"Compressed writer: {chunk.Size}");
 			binaryWriter.Write(chunk.Size);
 			binaryWriter.Write(chunk.Data, 0, chunk.Size);
 		}

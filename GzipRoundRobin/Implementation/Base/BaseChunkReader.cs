@@ -3,6 +3,7 @@ using System.Threading;
 using GzipRoundRobin.Abstractions;
 using GzipRoundRobin.Implementation.Chunks;
 using GzipRoundRobin.Primitives;
+using Serilog;
 
 namespace GzipRoundRobin.Implementation.Base
 {
@@ -22,7 +23,7 @@ namespace GzipRoundRobin.Implementation.Base
 
 		public void Start(string filepath)
 		{
-			Console.WriteLine("reading start single thread");
+			Log.Information("reading start single thread");
 			new Thread(() => ReadChunks(filepath)).Start();
 		}
 

@@ -3,6 +3,7 @@ using System.IO;
 using System.Threading;
 using GzipRoundRobin.Abstractions;
 using GzipRoundRobin.Primitives;
+using Serilog;
 
 namespace GzipRoundRobin.Implementation.Base
 {
@@ -32,7 +33,7 @@ namespace GzipRoundRobin.Implementation.Base
 					{
 						if (Reset.IsSet && currentQueue.IsEmpty)
 						{
-							Console.WriteLine("Write done");
+							Log.Information("Write done");
 							return;
 						}
 

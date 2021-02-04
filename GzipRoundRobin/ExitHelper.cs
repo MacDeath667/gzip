@@ -1,4 +1,5 @@
 ﻿using System;
+using Serilog;
 
 namespace GzipRoundRobin
 {
@@ -6,12 +7,7 @@ namespace GzipRoundRobin
 	{
 		internal static void ExitWithCode(int exitCode)
 		{
-			Console.WriteLine("Application will be closed");
-			Environment.Exit(exitCode);
-		}
-		internal static void ExitWithCode(string exitMessage, int exitCode)
-		{
-			Console.WriteLine(exitMessage);
+			Log.Information("Application will be closed");
 			Environment.Exit(exitCode);
 		}
 	}

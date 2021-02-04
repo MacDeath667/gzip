@@ -2,6 +2,7 @@
 using System.IO;
 using GzipRoundRobin.Implementation.Base;
 using GzipRoundRobin.Primitives;
+using Serilog;
 
 namespace GzipRoundRobin.Implementation.Reader
 {
@@ -20,7 +21,7 @@ namespace GzipRoundRobin.Implementation.Reader
 				StartWork.Set();
 				var i = 0;
 				var bufferSize = ReadBufferSizeHeader(filestream);
-				Console.WriteLine($"Unpacking with buffersize: {bufferSize}");
+				Log.Debug($"Unpacking with buffersize: {bufferSize}");
 				while (true)
 				{
 					int chunkSize = ReadCompressedDataLength(filestream);
@@ -31,13 +32,13 @@ namespace GzipRoundRobin.Implementation.Reader
 					}
 
 					var index = i % Queues.Length;
-					Console.WriteLine($"Compressed chunk: {i}, size: {_readBytes}");
+					Log.Debug($"Compressed chunk: {i}, size: {_readBytes}");
 					Queues[index].Enqueue(CreateChunk(buffer.Clone() as byte[], _readBytes));
 					++i;
 				}
 
 				Reset.Reset();
-				Console.WriteLine("File end");
+				Log.Information("End of file");
 			}
 		}
 
@@ -62,12 +63,12 @@ namespace GzipRoundRobin.Implementation.Reader
 			}
 			if (bufferSize>_settings.BufferBytes)
 			{
-				ExitHelper.ExitWithCode($"BufferBytes in appsettings.json must be {bufferSize} or more",1);
-				Environment.Exit(1);
+				Log.Error($"BufferBytes in appsettings.json must be {bufferSize} or more");
+				ExitHelper.ExitWithCode(1);
 			}
 			if (bufferSize<_settings.BufferBytes)
 			{
-				Console.WriteLine($"Buffer will be reduced to {bufferSize} bytes");
+				Log.Information($"Buffer will be reduced to {bufferSize} bytes");
 				_settings.BufferBytes = bufferSize;
 			}
 			return bufferSize;

@@ -1,6 +1,7 @@
 ﻿using System;
 using GzipRoundRobin.Abstractions;
 using GzipRoundRobin.Primitives;
+using Serilog;
 
 namespace GzipRoundRobin.Factory
 {
@@ -28,7 +29,7 @@ namespace GzipRoundRobin.Factory
 					return MakeDecompressChain();
 			}
 
-			Console.WriteLine("Unknown Gzip action type. Check it");
+			Log.Error("Unknown Gzip action type. Check it");
 			ExitHelper.ExitWithCode(1);
 			return default;
 		}

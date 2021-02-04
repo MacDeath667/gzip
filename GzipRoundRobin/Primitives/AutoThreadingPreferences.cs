@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Extensions.Configuration;
+using Serilog;
 
 namespace GzipRoundRobin.Primitives
 {
@@ -23,8 +24,8 @@ namespace GzipRoundRobin.Primitives
 			}
 			catch (InvalidOperationException e)
 			{
-				Console.WriteLine(e.Message);
-				Console.WriteLine($"Auto settings will be applied.");
+				Log.Warning(e.Message);
+				Log.Warning($"Auto settings will be applied.");
 				preferences = new SimpleThreadingPreferences();
 			}
 			

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
 using GzipRoundRobin.Primitives;
+using Serilog;
+using Serilog.Events;
 
 namespace GzipRoundRobin.Validators
 {
@@ -17,32 +19,42 @@ namespace GzipRoundRobin.Validators
 		{
 			if (filepath is null)
 			{
-				Console.WriteLine("Input filepath was null or unsupported format. Check arguments");
+				Log.Error("Input filepath was null or unsupported format. Check arguments");
 				return false;
 			}
 
 			FileInfo fileInfo = default;
 			try
 			{
-				fileInfo= new FileInfo(filepath);
+				fileInfo = new FileInfo(filepath);
 			}
 			catch (Exception e)
 			{
-				ExitHelper.ExitWithCode($"Input file can't be found by reason: {e.Message}", 1);
+				Log.Error($"Input file can't be found by reason: {e.Message}");
+				ExitHelper.ExitWithCode(1);
 			}
-			Console.WriteLine(fileInfo != null && fileInfo.Exists
-				? $"Found file with size {fileInfo.Length}"
-				: $"File not found on the filepath: {filepath}. Check input filepath an arguments");
-			return fileInfo != null && fileInfo.Exists;
+
+			var fileExists = fileInfo != null && fileInfo.Exists;
+			if (fileExists)
+			{
+				Log.Information($"Found file with size {fileInfo.Length} bytes");
+			}
+			else
+			{
+				Log.Error($"File not found on the filepath: {filepath}. Check input filepath an arguments");
+			}
+
+			return fileExists;
 		}
 
 		private static bool IsValidOutpath(string filepath)
 		{
 			if (filepath is null)
 			{
-				Console.WriteLine("Output filepath was null or unsupported format. Check arguments");
+				Log.Error("Output filepath was null or unsupported format. Check arguments");
 				return false;
 			}
+
 			try
 			{
 				File.Create(filepath).Close();
@@ -51,8 +63,9 @@ namespace GzipRoundRobin.Validators
 			}
 			catch (Exception e)
 			{
-				Console.WriteLine($"Output file can not be write on the filepath: \"{filepath}\" by reason: {e.Message}" +
-				                  $"{Environment.NewLine}Check output filepath an arguments");
+				Log.Error(
+					$"Output file can not be write on the filepath: \"{filepath}\" by reason: {e.Message}" +
+					 $"{Environment.NewLine}Check output filepath an arguments");
 				return false;
 			}
 		}
@@ -60,9 +73,18 @@ namespace GzipRoundRobin.Validators
 		private static bool IsValidGzipActionType(GzipActionType parsedArgsGzipActionType)
 		{
 			var isValidType = parsedArgsGzipActionType != GzipActionType.Unknown;
-			Console.WriteLine(isValidType
-				? $"Selected file will be processed with {parsedArgsGzipActionType.ToString()} option."
-				: "Check action option in CLI arguments. Must be \"Compress\" or \"Decompress\" option.");
+			
+			if (isValidType)
+			{
+				Log.Information(
+					$"Selected file will be processed with {parsedArgsGzipActionType.ToString()} option.");
+			}
+			else
+			{
+				Log.Error(
+					"Check action option in CLI arguments. Must be \"Compress\" or \"Decompress\" option.");
+			}
+
 			return isValidType;
 		}
 	}

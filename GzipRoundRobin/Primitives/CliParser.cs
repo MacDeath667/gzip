@@ -1,4 +1,5 @@
 ﻿using System;
+using Serilog;
 
 namespace GzipRoundRobin.Primitives
 {
@@ -9,7 +10,7 @@ namespace GzipRoundRobin.Primitives
 			var result = new CliParserResult();
 			if (args.Length != 3)
 			{
-				Console.WriteLine("Count of arguments must be equal 3. Actual format: [compress/decompress] [input filepath] [output filepath]");
+				Log.Error("Count of arguments must be equal 3. Actual format: [compress/decompress] [input filepath] [output filepath]");
 				parseResult = result;
 				return false;
 			}

@@ -2,6 +2,7 @@
 using System.Threading;
 using GzipRoundRobin.Abstractions;
 using GzipRoundRobin.Primitives;
+using Serilog;
 
 namespace GzipRoundRobin.Implementation.Base
 {
@@ -19,7 +20,7 @@ namespace GzipRoundRobin.Implementation.Base
 
 		public void Start(int threadsCount)
 		{
-			Console.WriteLine($"Processing start in {threadsCount} threads");
+			Log.Information($"Processing start in {threadsCount} threads");
 
 			for (int i = 0; i < threadsCount; i++)
 			{
@@ -32,7 +33,7 @@ namespace GzipRoundRobin.Implementation.Base
 
 		private void Dequeue(int processorId)
 		{
-			Console.WriteLine($"Processing start in thread: {processorId}");
+			Log.Debug($"Processing start in thread: {processorId}");
 			var inputQueue = Reader.Queues[processorId];
 			var outputQueue = Writer.Queues[processorId];
 
@@ -52,7 +53,7 @@ namespace GzipRoundRobin.Implementation.Base
 			}
 
 			Writer.Reset.Signal();
-			Console.WriteLine($"Data processor: {processorId} finished.");
+			Log.Debug($"Data processor: {processorId} finished.");
 		}
 
 
