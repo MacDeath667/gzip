@@ -1,5 +1,4 @@
-﻿using System;
-using GzipRoundRobin.Abstractions;
+﻿using GzipRoundRobin.Abstractions;
 using GzipRoundRobin.Primitives;
 using Serilog;
 

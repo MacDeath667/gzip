@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using GzipRoundRobin.Abstractions;
 using GzipRoundRobin.Implementation.Chunks;
 using GzipRoundRobin.Primitives;

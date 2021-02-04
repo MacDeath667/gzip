@@ -2,7 +2,6 @@
 using System.IO;
 using GzipRoundRobin.Primitives;
 using Serilog;
-using Serilog.Events;
 
 namespace GzipRoundRobin.Validators
 {
